@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Administrare Conturi</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <script th:src="@{/javascript/newAccount.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: nav"></div>
+<div class="container-lg p-3">
+    <div class="card p-3 mb-2">
+        <div class="card-title p-2">
+            <h4>Administrare conturi</h4>
+            <h6 class="card-subtitle text-muted">Solicitare creare cont nou</h6>
+        </div>
+        <div class="card-body p-2">
+            <table class="table table-borderless table-hover mb-2">
+                <thead>
+                    <tr>
+                        <th scope="col">Lista conturi active</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr th:if="${activeAccounts == null}">
+                        <td>Nu aveti conturi active!</td>
+                    </tr>
+                    <tr th:if="${activeAccounts != null}"  th:each="account : ${activeAccounts}">
+                        <td>Cont<span th:text="${account.getAccountNumber()}"></span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <form action="/administrareConturi" name="newAccount" method="post" class="form-inline">
+                <div class="form-group mb-1">
+                    <label for="accountNumber" class="mr-4 mb-2">Cont Nou</label>
+                    <input type="text" name="accountNumber" class="form-control mr-4 mb-2" id="accountNumber" placeholder="Number">
+                    <button type="submit" class="btn btn-dark mr-4 mb-2">Trimite solicitare</button>
+                </div>
+            </form>
+            <button onclick="location.href='home'" class="btn btn-dark mr-4 mb-2">Renunta</button>
+            <div class="alert alert-danger" th:if="${messageFail!=null}">
+                <strong th:text="${messageFail}"></strong>
+            </div>
+            <div class="alert alert-success" th:if="${messageSuccess!=null}">
+                <strong th:text="${messageSuccess}"></strong>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

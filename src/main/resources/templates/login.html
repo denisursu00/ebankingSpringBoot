@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Login</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/login.css}">
+    <script th:src="@{/javascript/login.js}"></script>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="formContent">
+            <h2 class="fadeIn first active">Login</h2>
+            <form action="/login" method="post" name="login">
+                <input type="text" id="username" class="form-control fadeIn first" name="username" placeholder="username">
+                <input type="password" id="password" class="form-control fadeIn second" name="password" placeholder="password">
+                <div class="alert alert-danger fadeIn third" th:if="${message!=null}">
+                    <strong th:text="${message}"></strong>
+                </div>
+                <input type="submit" class="fadeIn third" value="Log In">
+            </form>
+        </div>
+    </div>
+</body>
+</html>

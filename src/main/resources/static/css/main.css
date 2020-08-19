@@ -1,0 +1,10 @@
+body {
+    background: #818181;
+    background: linear-gradient(to right, #6F6F6F, #AAAAAA);
+}
+p{
+    margin-bottom: 0;
+}
+.container-lg {
+    min-height: 87.3vh;
+}

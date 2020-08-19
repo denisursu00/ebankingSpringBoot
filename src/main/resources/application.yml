@@ -1,0 +1,6 @@
+app:
+  datasource:
+    jdbc-url: jdbc:oracle:thin:@192.168.13.99:1521:db
+    username: intership_denis
+    password: db
+    pool-size: 30

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Alimentare Cont</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <script th:src="@{/javascript/alimentareCont.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: nav"></div>
+<div class="container-lg p-3">
+    <div class="card p-3 mb-2">
+        <div class="card-title p-2">
+            <h4>Alimentare cont</h4>
+        </div>
+        <div class="card-body p-2">
+            <form action="/alimentareCont" name="alimentareCont" method="post">
+                <div class="form-group">
+                    <label class="col-form-label-lg" for="accountNumber">Sursa</label>
+                    <select class="form-control" id="accountNumber" name="accountId">
+                        <option value="" selected disabled hidden>Alegeti Contul Sursa</option>
+                        <th:block th:each="account : ${accounts}">
+                            <option th:value="${account.getId()}">
+                                <p>Contul <span th:text="${account.getAccountNumber()}"></span></p>
+                            </option>
+                        </th:block>
+                    </select>
+                    <input type="text" class="form-control mt-4 mb-3" id="accountSum" name="accountSum" placeholder="Suma cont" readonly>
+                    <label class="col-form-label-lg" for="depositSum">Suma de alimentare</label>
+                    <input type="text" class="form-control" id="depositSum" placeholder="Suma alimentare" name="depositSum">
+                </div>
+                <div class="alert alert-success" th:if="${successMessage!=null}">
+                    <strong th:text="${successMessage}"></strong>
+                </div>
+                <button type="submit" class="btn btn-dark mt-4">Transfera</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

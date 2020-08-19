@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Tranfer</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <script th:src="@{/javascript/transfer.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: nav"></div>
+<div class="container-lg p-3">
+    <div class="card p-3 mb-2">
+        <div class="card-title p-2">
+            <h4>Transfer</h4>
+        </div>
+        <div class="card-body p-2">
+            <form action="/transfer" name="transfer" method="post">
+                <div class="form-group">
+                    <label class="col-form-label-lg" for="sourceAccountId">Sursa</label>
+                    <select class="form-control" id="sourceAccountId" name="sourceAccountId">
+                        <option value="" selected disabled hidden>Alegeti contul sursa</option>
+                        <th:block th:each="account : ${sourceAccounts}">
+                            <option th:value="${account.getId()}">
+                                <p>Contul <span th:text="${account.getAccountNumber()}"></span></p>
+                            </option>
+                        </th:block>
+                    </select>
+                    <input type="text" class="form-control mt-4 mb-3" id="sourceAccountSum" name="sourceAccountSum" placeholder="Suma cont" readonly>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label-lg" for="destinationClientId">Destinatia</label>
+                    <select class="form-control" id="destinationClientId" name="destinationClientId">
+                        <option value="" selected disabled hidden>Alegeti clientul</option>
+                        <th:block th:each="client : ${clients}">
+                            <option th:value="${client.getId()}">
+                                <p><span th:text="${client.getLastName()}"></span> <span th:text="${client.getFirstName()}"></span></p>
+                            </option>
+                        </th:block>
+                    </select>
+                    <select class="form-control mt-4 mb-2" id="destinationAccountId" name="destinationAccountId">
+                        <option value="" selected disabled hidden>Alegeti contul destinatie</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label class="col-form-label-lg" for="transferSum">Suma de transfer</label>
+                    <input type="text" class="form-control" id="transferSum" placeholder="Suma alimentare" name="transferSum">
+                </div>
+                <div class="alert alert-success" th:if="${successMessage!=null}">
+                    <strong th:text="${successMessage}"></strong>
+                </div>
+                <button type="submit" class="btn btn-dark mt-4">Transfera</button>
+            </form>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

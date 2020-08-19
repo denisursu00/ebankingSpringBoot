@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Rapoarte</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+    <script th:src="@{/javascript/rapoarte.js}"></script>
+</head>
+<body>
+<div th:replace="fragments/navbar :: nav"></div>
+<div class="container-lg p-3">
+    <div class="card p-3 mb-2">
+        <div class="card-title p-2">
+            <h4>Rapoarte</h4>
+            <h6 class="card-subtitle text-muted">Lista tranzactii conturi</h6>
+        </div>
+        <div class="card-body p-2">
+            <form action="/rapoarte" method="post" name="report" class="d-print-none">
+                <div class="form-row mb-4">
+                    <div class="form-group col-md-3">
+                        <label for="accountId">Sursa</label>
+                        <select class="form-control" name="accountId" id="accountId">
+                            <option value="" selected disabled hidden>Alegeti Contul</option>
+                            <th:block th:each="account : ${accounts}">
+                                <option th:value="${account.getId()}">
+                                    <p>Contul <span th:text="${account.getAccountNumber()}"></span></p>
+                                </option>
+                            </th:block>
+                        </select>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="startDate">Start Date</label>
+                        <input class="form-control" type="date" id="startDate" name="startDate">
+                    </div>
+                    <div class="form-group col-md-3">
+                        <label for="endDate">End Date</label>
+                        <input class="form-control" type="date" id="endDate" name="endDate">
+                    </div>
+                    <div class="form-group col-md d-flex flex-column">
+                        <button type="submit" class="btn btn-dark mt-auto">Afisare</button>
+                    </div>
+                </div>
+            </form>
+            <div class="d-flex flex-column">
+                <table class="table table-responsive-sm table-bordered table-hover mb-3">
+                    <thead class="thead-light">
+                    <tr>
+                        <th scope="col">Data</th>
+                        <th scope="col">Cont Debitor/Creditor</th>
+                        <th scope="col">Suma debit</th>
+                        <th scope="col">Suma credit</th>
+                        <th scope="col">Sold curent</th>
+                    </tr>
+                    </thead>
+                    <tbody th:if="${not #lists.isEmpty(transactions)}">
+                        <th:block th:each="transaction : ${transactions}">
+                            <tr>
+                                <td th:text="${transaction.getTransactionDate()}"></td>
+                                <td th:text="${transaction.getAccountId()}"></td>
+                                <td th:text="${transaction.getDebitSum()}"></td>
+                                <td th:text="${transaction.getCreditSum()}"></td>
+                                <td th:text="${transaction.getCurrentSum()}"></td>
+                            </tr>
+                        </th:block>
+                    </tbody>
+                </table>
+                <div class="row mb-4 d-print-none" th:if="${not #lists.isEmpty(transactions)}">
+                    <div class="col-sm mb-3 d-flex flex-column">
+                        <button class="btn btn-dark" onclick="location.href='getCsvReport'">Raport CSV</button>
+                    </div>
+                    <div class="col-sm mb-3 d-flex flex-column">
+                        <button class="btn btn-dark" id="htmlReport">Raport HTML</button>
+                    </div>
+                    <div class="col-sm d-flex flex-column">
+                        <button class="btn btn-dark" onclick="location.href='getPdfReport'">Raport PDF</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>

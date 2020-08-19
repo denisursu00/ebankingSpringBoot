@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <th:block th:include="fragments/headinc :: head"></th:block>
+    <title>Vizualizare Conturi</title>
+    <link rel="stylesheet" type="text/css" th:href="@{/css/main.css}">
+</head>
+<body>
+<div th:replace="fragments/navbar :: nav"></div>
+<div class="container-lg p-3">
+    <div class="card p-3 mb-2">
+        <div class="card-title p-2">
+            <h4>Vizualizare conturi</h4>
+            <h6 class="card-subtitle text-muted">Vizualizarea starii contului impreuna cu suma</h6>
+        </div>
+        <div class="card-body p-2">
+            <table class="table table-borderless table-hover mb-2">
+                <thead>
+                <tr>
+                    <th scope="col">Numar Cont</th>
+                    <th scope="col">Stare</th>
+                    <th scope="col">Suma</th>
+                </tr>
+                </thead>
+                <tbody>
+                <tr th:if="${accounts == null}">
+                    <td>Nu aveti conturi active!</td>
+                </tr>
+                <tr th:if="${accounts != null}" th:each="account : ${accounts}">
+                    <td>Cont<span th:text="${account.getAccountNumber()}"></span></td>
+                    <td><span th:text="${account.getState()}"></span></td>
+                    <td><span th:text="${account.getSum()}"></span></td>
+                </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+<div th:replace="fragments/footer :: footer"></div>
+</body>
+</html>
